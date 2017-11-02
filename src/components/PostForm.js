@@ -1,69 +1,75 @@
 import React, { Component } from 'react'
-import { fetchPost, fetchCategories, createPost, updatePost } from '../utils/api'
+import {
+  fetchPost,
+  fetchCategories,
+  createPost,
+  updatePost,
+} from '../utils/api'
 import { Link } from 'react-router-dom'
 import uuidv4 from 'uuid/v4'
 
-class PostForm extends Component
-{
+class PostForm extends Component {
   state = {
     post: {
       title: '',
-      category: "react",
+      category: 'react',
       author: '',
-      body: ''
+      body: '',
     },
-    categories: []
+    categories: [],
   }
   componentDidMount() {
     const id = this.props.match.params.post
 
-    if(id) {
-      fetchPost(id).then((post) => {
+    if (id) {
+      fetchPost(id).then(post => {
         this.setState({
-          ...this.state, post
+          ...this.state,
+          post,
         })
       })
     }
 
-    fetchCategories().then((categories) => {
+    fetchCategories().then(categories => {
       this.setState({
-        ...this.state, categories: categories.categories
+        ...this.state,
+        categories: categories.categories,
       })
     })
   }
-  handleInputChange = (e) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+  handleInputChange = e => {
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
     this.setState({
       post: {
         ...this.state.post,
-        [name]: value
-      }
-    });
+        [name]: value,
+      },
+    })
   }
   submit = () => {
     const { post } = this.state
 
-    const exists = post.id ? true: false
+    const exists = post.id ? true : false
 
     const promise = exists ? this.update(post) : this.create(post)
 
-    promise.then((post) => {
+    promise.then(post => {
       this.props.history.push(`/${post.category}/${post.id}`)
     })
   }
-  create = (post) => {
+  create = post => {
     const payload = {
       ...post,
       id: uuidv4(),
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }
 
     return createPost(payload)
   }
-  update = (post) => {
+  update = post => {
     const payload = post
 
     return updatePost(payload)
@@ -71,10 +77,11 @@ class PostForm extends Component
   render() {
     const { post, categories } = this.state
 
-    const isDisabled = post.title === ""
-      || post.category === ""
-      || post.body === ""
-      || post.author === ""
+    const isDisabled =
+      post.title === '' ||
+      post.category === '' ||
+      post.body === '' ||
+      post.author === ''
 
     return (
       <div>
@@ -82,7 +89,8 @@ class PostForm extends Component
           <div className="hero-body">
             <div className="container">
               <p className="title">
-                {post.id ? 'Edit' : 'Create'}: {post.id ? post.title : 'New Post'}
+                {post.id ? 'Edit' : 'Create'}:{' '}
+                {post.id ? post.title : 'New Post'}
               </p>
             </div>
           </div>
@@ -91,14 +99,23 @@ class PostForm extends Component
         <div className="container">
           <nav className="breadcrumb">
             <ul>
-              <li><Link to="/">Home</Link></li>
-              { post.id &&
-                <li><Link to={`/${post.category}`}>{post.category}</Link></li>
-              }
-              { post.id
-                  ? <li className="is-active"><a>Edit "{post.title}"</a></li>
-                  : <li className="is-active"><a>Create Post</a></li>
-              }
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              {post.id && (
+                <li>
+                  <Link to={`/${post.category}`}>{post.category}</Link>
+                </li>
+              )}
+              {post.id ? (
+                <li className="is-active">
+                  <a>Edit "{post.title}"</a>
+                </li>
+              ) : (
+                <li className="is-active">
+                  <a>Create Post</a>
+                </li>
+              )}
             </ul>
           </nav>
 
@@ -129,7 +146,7 @@ class PostForm extends Component
                   onChange={this.handleInputChange}
                 />
                 <span className="icon is-small is-left">
-                  <i className="fa fa-user"></i>
+                  <i className="fa fa-user" />
                 </span>
               </div>
             </div>
@@ -138,8 +155,12 @@ class PostForm extends Component
               <label className="label">Category</label>
               <div className="control">
                 <div className="select">
-                  <select name="category" onChange={this.handleInputChange} value={post.category}>
-                    {categories.map((category) => (
+                  <select
+                    name="category"
+                    onChange={this.handleInputChange}
+                    value={post.category}
+                  >
+                    {categories.map(category => (
                       <option key={category.path} name={category.path}>
                         {category.name}
                       </option>
@@ -158,8 +179,7 @@ class PostForm extends Component
                   name="body"
                   value={post.body}
                   onChange={this.handleInputChange}
-                >
-                </textarea>
+                />
               </div>
             </div>
 

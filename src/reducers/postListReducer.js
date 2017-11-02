@@ -1,23 +1,25 @@
 import { RECEIVE_POSTS, RECEIVE_POST, DELETE_POST } from '../actions'
 
 const initialPostListState = {
-  posts: []
+  posts: [],
 }
 
-function posts (state = initialPostListState, action) {
+function posts(state = initialPostListState, action) {
   switch (action.type) {
     case RECEIVE_POSTS:
       return {
         ...state,
-        posts: action.posts
+        posts: action.posts,
       }
     case RECEIVE_POST:
       return {
-        posts: state.posts.map((post) => post.id === action.post.id ? action.post : post)
+        posts: state.posts.map(
+          post => (post.id === action.post.id ? action.post : post),
+        ),
       }
     case DELETE_POST:
       return {
-        posts: state.posts.filter((post) => post.id !== action.post.id)
+        posts: state.posts.filter(post => post.id !== action.post.id),
       }
     default:
       return state

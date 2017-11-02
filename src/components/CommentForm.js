@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
 import uuidv4 from 'uuid/v4'
 
-class CommentForm extends Component
-{
+class CommentForm extends Component {
   state = {
-    username: "",
-    body: "",
+    username: '',
+    body: '',
     missingUsername: true,
-    missingBody: true
+    missingBody: true,
   }
 
-  onUsernameChanged = (e) => {
-    const missingUsername = e.target.value === ""
+  onUsernameChanged = e => {
+    const missingUsername = e.target.value === ''
 
     this.setState({
-      ...this.state, username: e.target.value, missingUsername
+      ...this.state,
+      username: e.target.value,
+      missingUsername,
     })
   }
-  onBodyChanged = (e) => {
-    const missingBody = e.target.value === ""
+  onBodyChanged = e => {
+    const missingBody = e.target.value === ''
 
     this.setState({
-      ...this.state, body: e.target.value, missingBody
+      ...this.state,
+      body: e.target.value,
+      missingBody,
     })
   }
   submit = () => {
@@ -31,7 +34,7 @@ class CommentForm extends Component
       id: uuidv4(),
       author: this.state.username,
       body: this.state.body,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     })
 
     this.reset()
@@ -42,7 +45,11 @@ class CommentForm extends Component
   render() {
     return (
       <div>
-        <form ref={(form) => { this.form = form }}>
+        <form
+          ref={form => {
+            this.form = form
+          }}
+        >
           <div className="field">
             <label className="label">Username</label>
             <div className="control has-icons-left has-icons-right">
@@ -53,7 +60,7 @@ class CommentForm extends Component
                 onChange={this.onUsernameChanged}
               />
               <span className="icon is-small is-left">
-                <i className="fa fa-user"></i>
+                <i className="fa fa-user" />
               </span>
             </div>
           </div>
@@ -65,7 +72,7 @@ class CommentForm extends Component
                 className="textarea"
                 placeholder="Your comment..."
                 onChange={this.onBodyChanged}
-              ></textarea>
+              />
             </div>
           </div>
 

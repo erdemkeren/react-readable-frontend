@@ -11,29 +11,14 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Route
-          exact path="/"
-          component={PostList}
-        />
-        <Route
-          exact strict path="/create-post/"
-          component={PostForm}
-        />
-        <Route
-          exact strict path="/:category"
-          component={CategoryPostList}
-        />
-        <Route
-          exact strict path="/:category/:post"
-          component={PostView}
-        />
-        <Route
-          exact strict path="/:category/:post/edit"
-          component={PostForm}
-        />
+        <Route exact path="/" component={PostList} />
+        <Route exact strict path="/create-post/" component={PostForm} />
+        <Route exact strict path="/:category" component={CategoryPostList} />
+        <Route exact strict path="/:category/:post" component={PostView} />
+        <Route exact strict path="/:category/:post/edit" component={PostForm} />
       </div>
     )
   }
 }
 
-export default App;
+export default App
