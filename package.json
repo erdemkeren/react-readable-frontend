@@ -1,0 +1,40 @@
+{
+  "name": "reactnd-project-readable-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "format": "prettier --trailing-comma all --single-quote --no-semi --write 'src/*.js' 'src/**/*.js'",
+    "precommit": "lint-staged"
+  },
+  "dependencies": {
+    "bulma": "^0.6.0",
+    "font-awesome": "^4.7.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "sort-by": "^1.2.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "prettier": "^1.5.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --trailing-comma all --single-quote --no-semi --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged"
+  }
+}
