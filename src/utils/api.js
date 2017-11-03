@@ -1,39 +1,53 @@
-const AUTHORIZATION_HEADER = 'erdemkeren'
+import { API_BASE_URL, API_AUTHORIZATION_HEADER } from '../.env'
+
+/**
+ * Create backend url for the given route.
+ *
+ * @param  string route
+ *
+ * @return string
+ */
+function createUrl(route) {
+  const baseUrl = API_BASE_URL.replace(/\/+$/, '')
+  route = route.replace(/^\//, '')
+
+  return `${baseUrl}/${route}`
+}
 
 // Get all the posts.
 export function fetchPosts() {
-  const url = 'http://localhost:3001/posts'
+  const url = createUrl('posts')
 
   return fetch(url, {
-    headers: { Authorization: AUTHORIZATION_HEADER },
+    headers: { Authorization: API_AUTHORIZATION_HEADER },
   }).then(res => res.json())
 }
 
 // Get all the categories available for the app.
 export function fetchCategories() {
-  const url = 'http://localhost:3001/categories'
+  const url = createUrl('categories')
 
   return fetch(url, {
-    headers: { Authorization: AUTHORIZATION_HEADER },
+    headers: { Authorization: API_AUTHORIZATION_HEADER },
   }).then(res => res.json())
 }
 
 // Get the posts of the given category.
 export function fetchPostsByCategory(categoryId) {
-  const url = `http://localhost:3001/${categoryId}/posts`
+  const url = createUrl(`${categoryId}/posts`)
 
   return fetch(url, {
-    headers: { Authorization: AUTHORIZATION_HEADER },
+    headers: { Authorization: API_AUTHORIZATION_HEADER },
   }).then(res => res.json())
 }
 
 // Store a new post.
 export function createPost({ id, timestamp, title, body, author, category }) {
-  const url = `http://localhost:3001/posts`
+  const url = createUrl(`posts`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -50,9 +64,9 @@ export function createPost({ id, timestamp, title, body, author, category }) {
 
 // Get the details of the post by the given unique identifier.
 export function fetchPost(id) {
-  const url = `http://localhost:3001/posts/${id}`
+  const url = createUrl(`posts/${id}`)
 
-  return fetch(url, { headers: { Authorization: AUTHORIZATION_HEADER } })
+  return fetch(url, { headers: { Authorization: API_AUTHORIZATION_HEADER } })
     .then(res => {
       if (!res.ok) {
         throw Error(res.statusText)
@@ -65,11 +79,11 @@ export function fetchPost(id) {
 
 // Upvote the given post.
 export function upvotePost(id) {
-  const url = `http://localhost:3001/posts/${id}`
+  const url = createUrl(`posts/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -81,11 +95,11 @@ export function upvotePost(id) {
 
 // Downvote the given post.
 export function downvotePost(id) {
-  const url = `http://localhost:3001/posts/${id}`
+  const url = createUrl(`posts/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -97,11 +111,11 @@ export function downvotePost(id) {
 
 // Update the given post by the unique identifier.
 export function updatePost({ id, title, body }) {
-  const url = `http://localhost:3001/posts/${id}`
+  const url = createUrl(`posts/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'PUT',
@@ -114,11 +128,11 @@ export function updatePost({ id, title, body }) {
 
 // Delete the given post by the unique identifier.
 export function deletePost(id) {
-  const url = `http://localhost:3001/posts/${id}`
+  const url = createUrl(`posts/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'DELETE',
@@ -127,20 +141,20 @@ export function deletePost(id) {
 
 // Get the comments of the given post by the unique identifier.
 export function fetchCommentsByPostId(id) {
-  const url = `http://localhost:3001/posts/${id}/comments`
+  const url = createUrl(`posts/${id}/comments`)
 
   return fetch(url, {
-    headers: { Authorization: AUTHORIZATION_HEADER },
+    headers: { Authorization: API_AUTHORIZATION_HEADER },
   }).then(res => res.json())
 }
 
 // Store a new comment.
 export function createComment(postId, { id, author, body, timestamp }) {
-  const url = `http://localhost:3001/comments`
+  const url = createUrl(`comments`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -156,11 +170,11 @@ export function createComment(postId, { id, author, body, timestamp }) {
 
 // Upvote the given comment.
 export function upvoteComment(id) {
-  const url = `http://localhost:3001/comments/${id}`
+  const url = createUrl(`comments/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -172,11 +186,11 @@ export function upvoteComment(id) {
 
 // Downvote the given comment.
 export function downvoteComment(id) {
-  const url = `http://localhost:3001/comments/${id}`
+  const url = createUrl(`comments/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'POST',
@@ -188,11 +202,11 @@ export function downvoteComment(id) {
 
 // Update the comment by the given unique identifier.
 export function updateComment(id, { timestamp, body }) {
-  const url = `http://localhost:3001/comments/${id}`
+  const url = createUrl(`comments/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'PUT',
@@ -205,11 +219,11 @@ export function updateComment(id, { timestamp, body }) {
 
 // Delete the comment given by the unique identifier.
 export function deleteComment(id) {
-  const url = `http://localhost:3001/comments/${id}`
+  const url = createUrl(`comments/${id}`)
 
   return fetch(url, {
     headers: {
-      Authorization: AUTHORIZATION_HEADER,
+      Authorization: API_AUTHORIZATION_HEADER,
       'Content-type': 'application/json',
     },
     method: 'DELETE',

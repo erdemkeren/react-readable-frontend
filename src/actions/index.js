@@ -1,14 +1,4 @@
-/*---------------------
- * Action Definitions
- *---------------------
- */
-
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const RECEIVE_POST = 'RECEIVE_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
-export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
+import * as ActionType from './types'
 
 /*---------------------
  * Action Creators
@@ -17,42 +7,42 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function receivePosts(posts) {
   return {
-    type: RECEIVE_POSTS,
+    type: ActionType.RECEIVE_POSTS,
     posts,
   }
 }
 
 export function receivePost(post) {
   return {
-    type: RECEIVE_POST,
+    type: ActionType.RECEIVE_POST,
     post,
   }
 }
 
 export function postDeleted(post) {
   return {
-    type: DELETE_POST,
+    type: ActionType.DELETE_POST,
     post,
   }
 }
 
 export function receiveComments(comments) {
   return {
-    type: RECEIVE_COMMENTS,
+    type: ActionType.RECEIVE_COMMENTS,
     comments,
   }
 }
 
 export function receiveComment(comment) {
   return {
-    type: RECEIVE_COMMENT,
+    type: ActionType.RECEIVE_COMMENT,
     comment,
   }
 }
 
 export function commentDeleted(comment) {
   return {
-    type: DELETE_COMMENT,
+    type: ActionType.DELETE_COMMENT,
     comment,
   }
 }

@@ -3,7 +3,7 @@ import {
   RECEIVE_COMMENTS,
   RECEIVE_COMMENT,
   DELETE_COMMENT,
-} from '../actions'
+} from '../actions/types'
 
 const initialPostState = {
   post: {

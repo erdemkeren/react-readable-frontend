@@ -24,8 +24,54 @@ import Comment from './Comment'
 import CommentForm from './CommentForm'
 import sortBy from 'sort-by'
 
+function ServerErrorView() {
+  return (
+    <div>
+      <section className={`hero is-danger`}>
+        <div className="hero-body">
+          <div className="container">
+            <p className="title">:( 500 happens.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container content">
+          <h1>And has just happened again.</h1>
+          <p>It looks like we are having some technic issues at that time.</p>
+          <Link to="/">Go Home.</Link>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function NotFoundView() {
+  return (
+    <div>
+      <section className={`hero is-info`}>
+        <div className="hero-body">
+          <div className="container">
+            <p className="title">:( Post not found.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container content">
+          <h1>Whoops!</h1>
+          <p>We could not find the post you are looking for.</p>
+          <Link to="/">Go Home?</Link>
+        </div>
+      </section>
+    </div>
+  )
+}
+
 class PostView extends Component {
   state = {
+    notFound: false,
+    serverError: false,
     editCommentId: null,
   }
   componentDidMount() {
@@ -34,14 +80,22 @@ class PostView extends Component {
 
     fetchPost(postId)
       .then(post => {
+        if (!post.hasOwnProperty('id')) {
+          this.setState({
+            notFound: true,
+          })
+
+          return
+        }
+
         dispatch(receivePost(post))
       })
       .catch(e => {
-        alert("The post doesn't exists any more.")
+        this.setState({
+          serverError: true,
+        })
 
         const category = this.props.match.params.category
-
-        this.props.history.push(`/${category}`)
       })
 
     fetchCommentsByPostId(postId).then(comments => {
@@ -118,6 +172,12 @@ class PostView extends Component {
     })
   }
   render() {
+    if (this.state.serverError) {
+      return <ServerErrorView />
+    } else if (this.state.notFound) {
+      return <NotFoundView />
+    }
+
     const { post } = this.props
     const date = new Date(post.timestamp).toLocaleDateString()
     const category = this.props.match.params.category
